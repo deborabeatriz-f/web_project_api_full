@@ -1,21 +1,57 @@
 const User = require("../models/user");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const { JWT_SECRET } = process.env;
 
 function createUser(req, res) {
   const { email, password, name, about, avatar } = req.body;
 
-    if (!(email && password && name && about && avatar)) {
+  if (!(email && password)) {
     return res.status(400).send({ message: "Dados inválidos" });
   }
 
-  bcrypt.hash(password, 10).then((hash) =>
-    User.create({
-      email,
-      password: hash,
-    })
-  );
-
-  return User.create({ email, password, name, about, avatar })
+  bcrypt
+    .hash(password, 10)
+    .then((hash) =>
+      User.create({
+        email,
+        password: hash,
+        name,
+        about,
+        avatar,
+      })
+    )
     .then((user) => res.status(201).json(user))
+    .catch((err) => res.status(500).send({ message: err.message }));
+}
+
+function login(req, res) {
+  const { email, password } = req.body;
+
+  if (!(email && password)) {
+    return res.status(400).send({ message: "Email e senha obrigatórios" });
+  }
+
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).send({ message: "Email ou senha inválidos" });
+      }
+
+      return bcrypt.compare(password, user.password).then((match) => {
+        if (!match) {
+          return res
+            .status(401)
+            .send({ message: "Email e senha obrigatórios" });
+        }
+
+        const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+          expiresIn: "7 days",
+        });
+        return res.status(200).send({ token });
+      });
+    })
     .catch((err) => res.status(500).send({ message: err.message }));
 }
 
@@ -74,4 +110,5 @@ module.exports = {
   findUserById,
   updateUser,
   updateAvatar,
+  login,
 };
