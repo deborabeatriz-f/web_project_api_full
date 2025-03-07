@@ -4,7 +4,7 @@ const { JWT_SECRET } = process.env;
 
 const auth = (req, res, next) => {
   if (!authorization || !authorization.startsWith("Bearer ")) {
-    return res.status(401).send({ message: "Autorização necessária" });
+    return res.status(403).send({ message: "Recurso negado" });
   }
 
   const token = authorization.replace("Bearer ", "");
@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
   try {
     payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    return res.status(401).send({ message: "Authorization required" });
+    return res.status(403).send({ message: "Recurso negado" });
   }
 
   req.user = payload;
