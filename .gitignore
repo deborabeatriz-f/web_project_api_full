@@ -1,0 +1,37 @@
+# Logs Backend
+backend/logs
+*.log
+backend/npm-debug.log*
+
+# Diretório de dependências
+frontend/node_modules
+backend/node_modules
+
+# Diretório de cache npm opcional
+.npm
+
+# Arquivos do sistema e pastas de configurações IDE
+.DS_Store
+backend/env
+
+# Logs Frontend
+frontend/logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/lerna-debug.log*
+
+frontend/dist
+frontend/dist-ssr
+*.local
+
+# Editor directories and files
+*.vscode/*
+!frontend/.vscode/extensions.json
+*.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
