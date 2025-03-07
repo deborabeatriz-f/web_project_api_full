@@ -3,21 +3,12 @@ const app = express();
 const { PORT = 3000 } = process.env;
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
-const { login, createUser } = require("./controllers/user")
+const { login, createUser } = require("./controllers/user");
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/aroundb");
 
 app.use(express.json());
-
-// Implementação de uma Solução de Autorização Temporária
-app.use((req, res, next) => {
-  req.user = {
-    _id: "679e26df57feee8a89b63933",
-  };
-
-  next();
-});
 
 app.post("/signin", login);
 app.post("/signup", createUser);
