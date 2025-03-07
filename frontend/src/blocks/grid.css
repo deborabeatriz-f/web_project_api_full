@@ -1,0 +1,100 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px 20px;
+}
+
+.grid__card {
+  display: flex;
+  flex-direction: column;
+  max-width: 282px;
+  width: 100%;
+  position: relative;
+}
+
+.grid__card-delete {
+  background: transparent url("../images/trash-icon.png") no-repeat;
+  width: 18px;
+  height: 19px;
+  border: none;
+  background-size: contain;
+  cursor: pointer;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+}
+
+.grid__card-delete:hover {
+  opacity: 60%;
+}
+
+.grid__card-image {
+  max-width: 282px;
+  height: 282px;
+  width: 100%;
+  border-radius: 10px 10px 0px 10px;
+}
+
+.grid__card-text {
+  color: rgba(0, 0, 0, 1);
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 21px 31px 15px;
+  margin: 0;
+  height: 30px;
+  border-radius: 0 0 10px 10px;
+}
+
+.grid__card-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 29.05px;
+  text-align: left;
+}
+
+.grid__button-heart {
+  border: none;
+  outline: none;
+  width: 21px;
+  height: 19px;
+  background-color: transparent;
+  background-image: url("../images/heart_icon.png");
+}
+
+.grid__button-heart:hover {
+  opacity: 50%;
+  cursor: pointer;
+  transition: 200ms ease-in-out;
+}
+
+.grid__button-heart-active {
+  background-image: url("../images/heart-clicked.png");
+}
+
+@media screen and (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .grid__card {
+    display: flex;
+    flex-direction: column;
+    max-width: 282px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 282px;
+  }
+}

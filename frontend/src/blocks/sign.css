@@ -1,0 +1,59 @@
+.sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sign__welcome {
+  font-weight: 900;
+  font-size: 24px;
+}
+
+.sign__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sign__email {
+  color: rgba(204, 204, 204, 1);
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  outline: none;
+  background-color: #000;
+  display: block;
+  line-height: 27px;
+  margin-top: 30px;
+}
+
+.sign__password {
+  color: rgba(204, 204, 204, 1);
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  outline: none;
+  background-color: #000;
+  display: block;
+  line-height: 27px;
+  margin-top: 30px;
+}
+
+.sign__button-container {
+  margin-top: 216px;
+}
+
+.sign__link {
+  padding: 14px 35px;
+}
+
+.sign__signin {
+  color: rgba(204, 204, 204, 1);
+  text-decoration: none;
+  margin-top: 15px;
+}
+
+.sign__login-link {
+  color: rgba(204, 204, 204, 1);
+}
+
+.sign__login-link:hover {
+  opacity: 60%;
+}
