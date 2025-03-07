@@ -25,7 +25,8 @@ function findCards(req, res) {
 
 function deleteCard(req, res) {
   const cardId = req.params.cardId;
-  return Card.findByIdAndDelete({ _id: cardId })
+  const userId = req.user._id;
+  return Card.findByIdAndDelete({ _id: cardId, owner: userId })
     .orFail(() => {
       const error = new Error("Nenhum cartão encontrado com esse id");
       error.statusCode = 404;
