@@ -11,8 +11,6 @@ const {
 
 const usersPath = path.join(__dirname, "../data/users.json");
 
-router.post("/", createUser);
-
 router.get("/", findUsers);
 
 router.get("/:id", findUserById);
