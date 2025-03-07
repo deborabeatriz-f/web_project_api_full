@@ -34,6 +34,7 @@ function login(req, res) {
   }
 
   User.findOne({ email })
+    .select("+password")
     .then((user) => {
       if (!user) {
         return res.status(401).send({ message: "Email ou senha inválidos" });
