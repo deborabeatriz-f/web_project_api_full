@@ -42,9 +42,9 @@ function App() {
     }
 
     getUserAuth(jwt).then((response) => {
-      const email = { email: response.data.email };
+      // const email = { email: response.email };
 
-      setCurrentUser((prevData) => ({ ...prevData, ...email }));
+      setCurrentUser((prevData) => ({ ...prevData, ...response }));
       setIsLoggedIn(true);
       navigate("/");
     });
