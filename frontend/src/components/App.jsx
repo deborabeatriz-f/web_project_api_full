@@ -43,6 +43,7 @@ function App() {
 
     getUserAuth(jwt).then((response) => {
       const email = { email: response.data.email };
+
       setCurrentUser((prevData) => ({ ...prevData, ...email }));
       setIsLoggedIn(true);
       navigate("/");
@@ -194,6 +195,7 @@ function App() {
             handleUpdateUser,
             handleUpdateAvatar,
             isLoggedIn,
+            setIsLoggedIn,
           }}
         >
           <Routes>
