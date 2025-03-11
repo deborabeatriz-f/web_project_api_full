@@ -4,10 +4,16 @@ const { PORT = 3000 } = process.env;
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
 const { login, createUser } = require("./controllers/user");
+const cors = require("cors");
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/aroundb");
 
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 
 app.post("/signin", login);
