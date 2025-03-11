@@ -7,6 +7,7 @@ const {
   updateUser,
   updateAvatar,
   login,
+  getUserProfile,
 } = require("../controllers/user");
 
 const auth = require("../middlewares/auth");
@@ -14,6 +15,8 @@ const auth = require("../middlewares/auth");
 router.get("/", auth, findUsers);
 
 router.get("/:id", auth, findUserById);
+
+router.get("/me", auth, getUserProfile);
 
 router.post("/register", createUser);
 
