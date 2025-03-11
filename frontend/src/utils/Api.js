@@ -1,14 +1,16 @@
 import { BASE_URL } from "./auth";
+import { getToken } from "./token";
 
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
-    this._headers = headers;
+    // this._headers = headers;
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: getHeaders(),
+      // headers: this._headers,
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -20,20 +22,22 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Error: ${res.status}`);
-    });
+      headers: getHeaders(),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .catch((err) => console.error(`Error: ${res.status}`));
+    // .catch((err) => console.error(`Error: ${err.getMessage()}`));
   }
 
   setUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: getHeaders(),
+      // headers: this._headers,
       body: JSON.stringify({
         name,
         about,
@@ -50,7 +54,8 @@ class Api {
   setAvatar({ avatar }) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: getHeaders(),
+      // headers: this._headers,
       body: JSON.stringify({ avatar }),
     }).then((res) => {
       if (res.ok) {
@@ -64,7 +69,8 @@ class Api {
   newCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: getHeaders(),
+      // headers: this._headers,
       body: JSON.stringify({
         name,
         link,
@@ -81,7 +87,8 @@ class Api {
   likedCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: this._headers,
+      headers: getHeaders(),
+      // headers: this._headers,
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -94,7 +101,8 @@ class Api {
   unlikedCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: getHeaders(),
+      // headers: this._headers,
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -107,7 +115,8 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${BASE_URL}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: getHeaders(),
+      // headers: this._headers,
     });
   }
 }
@@ -124,6 +133,14 @@ export const getUserAuth = (token) => {
   }).then((res) => {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });
+};
+
+const getHeaders = () => {
+  const token = getToken();
+  return {
+    authorization: token ? `Bearer ${token}` : "",
+    "Content-Type": "application/json",
+  };
 };
 
 const api = new Api({
