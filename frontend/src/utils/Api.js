@@ -105,17 +105,15 @@ class Api {
   }
 
   deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return fetch(`${BASE_URL}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     });
   }
 }
 
-const API_URL = "https://se-register-api.en.tripleten-services.com/v1";
-
 export const getUserAuth = (token) => {
-  return fetch(`${API_URL}/users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -129,7 +127,7 @@ export const getUserAuth = (token) => {
 };
 
 const api = new Api({
-  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
+  baseUrl: BASE_URL,
   headers: {
     authorization: "18003886-b213-4054-97f5-79797a7a7bca",
     "Content-Type": "application/json",
