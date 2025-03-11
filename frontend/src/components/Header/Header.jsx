@@ -24,7 +24,7 @@ export default function Header({ text }) {
     <>
       {isMenuOpen && (
         <div className="header__mobile-logout">
-          <p className="header__email">{currentUser.email}</p>
+          <p className="header__email">{currentUser?.email}</p>
           <button className="header__button-logout" onClick={handleLogOut}>
             Sair
           </button>
@@ -41,7 +41,7 @@ export default function Header({ text }) {
               onClick={() => handleToggleMenu()}
             ></button>
             <div className="header__logout">
-              <p className="header__email">{currentUser.email}</p>
+              <p className="header__email">{currentUser?.email}</p>
               <button className="header__button-logout" onClick={handleLogOut}>
                 Sair
               </button>{" "}
