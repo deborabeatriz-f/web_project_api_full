@@ -28,8 +28,8 @@ export default function Main(props) {
       <section className="profile">
         <div className="profile__card-image">
           <img
-            src={currentUser.avatar || avatar}
-            alt={currentUser.name || "Jacques Cousteau"}
+            src={currentUser?.avatar || avatar}
+            alt={currentUser?.name || "Jacques Cousteau"}
             className="profile__image"
           />
           <button
@@ -39,14 +39,14 @@ export default function Main(props) {
         </div>
         <div className="profile__card">
           <h2 className="profile__title">
-            {currentUser.name || "Jacques Cousteau"}
+            {currentUser?.name || "Jacques Cousteau"}
           </h2>
           <button
             className="profile__button-edit"
             onClick={() => handleOpenPopup(editProfilePopup)}
           ></button>
           <p className="profile__subtitle">
-            {currentUser.about || "Explorador"}
+            {currentUser?.about || "Explorador"}
           </p>
         </div>
 
