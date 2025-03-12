@@ -78,7 +78,7 @@ function App() {
         setIsLoggedIn(true);
         setToken(response.token);
         setInfoTooltipData({
-          text: "Vitória! Você precisa se registrar.",
+          text: "Vitória! Você está logado.",
           icon: successIcon,
         });
       })
@@ -100,7 +100,7 @@ function App() {
       .then(() => {
         navigate("/login");
         setInfoTooltipData({
-          text: "Vitória! Você precisa se registrar.",
+          text: "Vitória! Você se registrou.",
           icon: successIcon,
         });
       })
@@ -144,7 +144,7 @@ function App() {
   };
 
   async function handleCardLike(card) {
-    const isLiked = card.likes.some((like) => like === currentUser.id);
+    const isLiked = card.likes.some((like) => like === currentUser._id);
     if (isLiked) {
       await api.unlikedCard(card._id, isLiked).then((newCard) => {
         setCards((state) =>
