@@ -5,8 +5,10 @@ const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
 const { login, createUser } = require("./controllers/user");
 const cors = require("cors");
+import logger from "./middlewares/logger";
 
 const mongoose = require("mongoose");
+const errorHandler = require("./middlewares/errorHandler");
 mongoose.connect("mongodb://localhost:27017/aroundb");
 
 app.use(
@@ -15,6 +17,8 @@ app.use(
   })
 );
 app.use(express.json());
+
+app.use(logger.requestLogger);
 
 app.post("/signin", login);
 app.post("/signup", createUser);
@@ -29,6 +33,10 @@ app.get("/", (req, res) => {
 app.use("*", (req, res) => {
   return res.status(404).send({ message: "A solicitação não foi encontrada" });
 });
+
+app.use(logger.errorLogger);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
