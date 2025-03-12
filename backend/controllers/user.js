@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const NotFoundError = require("../errors/notFoundError");
+const BadRequest = require("../errors/badRequest");
+const UnauthorizedError = require("../errors/unauthorizedError");
 require("dotenv").config();
 
 const { JWT_SECRET } = process.env;
@@ -9,7 +12,7 @@ function createUser(req, res) {
   const { email, password, name, about, avatar } = req.body;
 
   if (!(email && password)) {
-    return res.status(400).send({ message: "Dados inválidos" });
+    throw new BadRequest("Dados inválidos");
   }
 
   bcrypt
@@ -31,21 +34,19 @@ function login(req, res) {
   const { email, password } = req.body;
 
   if (!(email && password)) {
-    return res.status(400).send({ message: "Email e senha obrigatórios" });
+    throw new BadRequest("Email e senha obrigatórios");
   }
 
   User.findOne({ email })
     .select("+password")
     .then((user) => {
       if (!user) {
-        return res.status(401).send({ message: "Email ou senha inválidos" });
+        throw new UnauthorizedError("Email ou senha inválidos");
       }
 
       return bcrypt.compare(password, user.password).then((match) => {
         if (!match) {
-          return res
-            .status(401)
-            .send({ message: "Email e senha obrigatórios" });
+          throw new UnauthorizedError("Email ou senha inválidos");
         }
 
         const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
@@ -64,7 +65,7 @@ function getUserProfile(req, res) {
   User.findById(userId)
     .then((users) => {
       if (!users) {
-        return res.status(404).send({ message: "Usuário não encontrado" });
+        throw new NotFoundError("Usuário não encontrado");
       }
       return res.status(200).json(users);
     })
@@ -75,34 +76,19 @@ function findUsers(req, res) {
   return User.find({})
     .then((users) => {
       if (!users) {
-        return res.status(404).send({ message: "Usuários não encontrados" });
+        throw new NotFoundError("Usuário não encontrado");
       }
       return res.status(200).json(users);
     })
     .catch((err) => res.status(500).send({ message: err.message }));
 }
 
-// function findUserById(req, res) {
-//   const userId = req.params.id;
-
-//   return User.findById({ _id: userId })
-//     .then((users) => {
-//       if (!users) {
-//         return res.status(404).send({ message: "Usuário não encontrado" });
-//       }
-//       return res.status(200).json(users);
-//     })
-//     .catch((err) => res.status(500).send({ message: err.message }));
-// }
-
 function updateUser(req, res) {
   const userId = req.user._id;
   const { name, about } = req.body;
   return User.findByIdAndUpdate(userId, { name, about }, { new: true })
     .orFail(() => {
-      const error = new Error("Nenhum usuário encontrado com esse id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("Usuário não encontrado");
     })
     .then((updatedUser) => res.status(201).json(updatedUser))
     .catch((err) => res.status(500).send({ message: err.message }));
@@ -113,9 +99,7 @@ function updateAvatar(req, res) {
   const { avatar } = req.body;
   return User.findByIdAndUpdate(userId, { avatar }, { new: true })
     .orFail(() => {
-      const error = new Error("Nenhum usuário encontrado com esse id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("Usuário não encontrado");
     })
     .then((updatedAvatar) => res.status(201).json(updatedAvatar))
     .catch((err) => res.status(500).send({ message: err.message }));
@@ -124,7 +108,6 @@ function updateAvatar(req, res) {
 module.exports = {
   createUser,
   findUsers,
-  // findUserById,
   updateUser,
   updateAvatar,
   login,
