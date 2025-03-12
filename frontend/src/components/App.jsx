@@ -42,8 +42,6 @@ function App() {
     }
 
     getUserAuth(jwt).then((response) => {
-      // const email = { email: response.email };
-
       setCurrentUser((prevData) => ({ ...prevData, ...response }));
       setIsLoggedIn(true);
       navigate("/");
@@ -146,9 +144,9 @@ function App() {
   };
 
   async function handleCardLike(card) {
-    const isLiked = card.isLiked;
+    const isLiked = card.likes.some((like) => like === currentUser.id);
     if (isLiked) {
-      await api.unlikedCard(card._id).then((newCard) => {
+      await api.unlikedCard(card._id, isLiked).then((newCard) => {
         setCards((state) =>
           state.map((currentCard) =>
             currentCard._id === card._id ? newCard : currentCard
@@ -156,7 +154,7 @@ function App() {
         );
       });
     } else {
-      await api.likedCard(card._id).then((newCard) => {
+      await api.likedCard(card._id, isLiked).then((newCard) => {
         setCards((state) =>
           state.map((currentCard) =>
             currentCard._id === card._id ? newCard : currentCard
