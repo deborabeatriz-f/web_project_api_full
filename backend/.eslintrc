@@ -3,6 +3,7 @@
   "rules": {
     "no-console": ["warn", { "allow": ["log"] }], // Allow console.log while warning for other console methods
     "no-underscore-dangle": ["error", { "allow": ["_id"] }], // Allow variables starting with an underscore like _id
-    "linebreak-style": "off" // Disable enforcement of specific line break styles
+    "linebreak-style": "off", // Disable enforcement of specific line break styles
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
   }
 }
