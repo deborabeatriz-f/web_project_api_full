@@ -82,18 +82,18 @@ function findUsers(req, res) {
     .catch((err) => res.status(500).send({ message: err.message }));
 }
 
-function findUserById(req, res) {
-  const userId = req.params.id;
+// function findUserById(req, res) {
+//   const userId = req.params.id;
 
-  return User.findById({ _id: userId })
-    .then((users) => {
-      if (!users) {
-        return res.status(404).send({ message: "Usuário não encontrado" });
-      }
-      return res.status(200).json(users);
-    })
-    .catch((err) => res.status(500).send({ message: err.message }));
-}
+//   return User.findById({ _id: userId })
+//     .then((users) => {
+//       if (!users) {
+//         return res.status(404).send({ message: "Usuário não encontrado" });
+//       }
+//       return res.status(200).json(users);
+//     })
+//     .catch((err) => res.status(500).send({ message: err.message }));
+// }
 
 function updateUser(req, res) {
   const userId = req.user._id;
@@ -124,7 +124,7 @@ function updateAvatar(req, res) {
 module.exports = {
   createUser,
   findUsers,
-  findUserById,
+  // findUserById,
   updateUser,
   updateAvatar,
   login,
