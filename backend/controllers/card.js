@@ -40,6 +40,7 @@ function deleteCard(req, res) {
 
 function likeCard(req, res) {
   const cardId = req.params.cardId;
+
   return Card.findByIdAndUpdate(
     cardId,
     { $addToSet: { likes: req.user._id } },
@@ -50,7 +51,7 @@ function likeCard(req, res) {
       error.statusCode = 404;
       throw error;
     })
-    .then(() => res.status(204).send())
+    .then((card) => res.status(200).json(card))
     .catch((err) => res.status(500).send({ message: err.message }));
 }
 
@@ -66,7 +67,7 @@ function dislikeCard(req, res) {
       error.statusCode = 404;
       throw error;
     })
-    .then(() => res.status(204).send())
+    .then((card) => res.status(200).json(card))
     .catch((err) => res.status(500).send({ message: err.message }));
 }
 
