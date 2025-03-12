@@ -4,6 +4,7 @@ import Popup from "./components/Popup/Popup";
 import NewCard from "./components/Popup/components/NewCard/NewCard";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
+import PopupConfirmation from "./components/Popup/components/PopupConfirmation/PopupConfirmation.jsx";
 import Card from "./components/Card/Card";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
@@ -22,6 +23,7 @@ export default function Main(props) {
   const newCardPopup = { title: "New card", children: <NewCard /> };
   const editProfilePopup = { title: "Edit Profile", children: <EditProfile /> };
   const editAvatarPopup = { title: "Edit Avatar", children: <EditAvatar /> };
+  const PopupConfirmation = { children: <PopupConfirmation /> };
 
   return (
     <main className="page__container">
@@ -63,7 +65,7 @@ export default function Main(props) {
             card={card}
             handleOpenPopup={handleOpenPopup}
             handleCardLike={handleCardLike}
-            handleCardDelete={handleCardDelete}
+            // handleCardDelete={handleCardDelete}
           />
         ))}
       </section>
