@@ -1,18 +1,23 @@
 const router = require("express").Router();
-const fs = require("fs");
-const path = require("path");
-const { createCard, findCards, deleteCard, likeCard, dislikeCard } = require("../controllers/card");
 
-const cardsPath = path.join(__dirname, "../data/cards.json");
+const {
+  createCard,
+  findCards,
+  deleteCard,
+  likeCard,
+  dislikeCard,
+} = require("../controllers/card");
 
-router.post("/", createCard);
+const auth = require("../middlewares/auth");
 
-router.get("/", findCards);
+router.post("/", auth, createCard);
 
-router.delete("/:cardId", deleteCard);
+router.get("/", auth, findCards);
 
-router.put("/:cardId/likes", likeCard);
+router.delete("/:cardId", auth, deleteCard);
 
-router.delete("/:cardId/likes", dislikeCard);
+router.put("/:cardId/likes", auth, likeCard);
+
+router.delete("/:cardId/likes", auth, dislikeCard);
 
 module.exports = router;
