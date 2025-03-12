@@ -1,10 +1,12 @@
 const Card = require("../models/card");
+const NotFoundError = require("../errors/notFoundError");
+const BadRequest = require("../errors/badRequest");
 
 function createCard(req, res) {
   const { name, link } = req.body;
 
   if (!(name && link)) {
-    return res.status(400).send({ message: "Dados inválidos" });
+    throw new BadRequest("Dados inválidos");
   }
 
   return Card.create({ name, link, owner: req.user._id })
@@ -16,7 +18,7 @@ function findCards(req, res) {
   return Card.find({})
     .then((cards) => {
       if (!cards) {
-        return res.status(404).send({ message: "Card não encontrado" });
+        throw new NotFoundError("Usuário não encontrado");
       }
       return res.status(200).json(cards);
     })
@@ -28,9 +30,7 @@ function deleteCard(req, res) {
   const userId = req.user._id;
   return Card.findByIdAndDelete({ _id: cardId, owner: userId })
     .orFail(() => {
-      const error = new Error("Nenhum cartão encontrado com esse id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("Usuário não encontrado");
     })
     .then((card) =>
       res.status(200).send({ message: "Cartão deletado com sucesso" })
@@ -47,9 +47,7 @@ function likeCard(req, res) {
     { new: true }
   )
     .orFail(() => {
-      const error = new Error("Nenhum cartão encontrado com esse id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("Usuário não encontrado");
     })
     .then((card) => res.status(200).json(card))
     .catch((err) => res.status(500).send({ message: err.message }));
@@ -63,9 +61,7 @@ function dislikeCard(req, res) {
     { new: true }
   )
     .orFail(() => {
-      const error = new Error("Nenhum cartão encontrado com esse id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("Usuário não encontrado");
     })
     .then((card) => res.status(200).json(card))
     .catch((err) => res.status(500).send({ message: err.message }));
