@@ -2,15 +2,13 @@ import { BASE_URL } from "./auth";
 import { getToken } from "./token";
 
 class Api {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
-    // this._headers = headers;
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: getHeaders(),
-      // headers: this._headers,
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -37,7 +35,7 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: getHeaders(),
-      // headers: this._headers,
+
       body: JSON.stringify({
         name,
         about,
@@ -55,7 +53,7 @@ class Api {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: getHeaders(),
-      // headers: this._headers,
+
       body: JSON.stringify({ avatar }),
     }).then((res) => {
       if (res.ok) {
@@ -70,7 +68,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: getHeaders(),
-      // headers: this._headers,
+
       body: JSON.stringify({
         name,
         link,
@@ -88,7 +86,6 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: getHeaders(),
-      // headers: this._headers,
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -102,7 +99,6 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: getHeaders(),
-      // headers: this._headers,
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -116,7 +112,6 @@ class Api {
     return fetch(`${BASE_URL}/cards/${cardId}`, {
       method: "DELETE",
       headers: getHeaders(),
-      // headers: this._headers,
     });
   }
 }
