@@ -1,10 +1,17 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
     unique: true,
+    validator: {
+      function(value) {
+        return validator.isEmail(value);
+      },
+      message: "Email inválido",
+    },
   },
   password: {
     type: String,
@@ -30,7 +37,7 @@ const userSchema = new mongoose.Schema({
       "https://practicum-content.s3.us-west-1.amazonaws.com/resources/moved_avatar_1604080799.jpg",
     validator: {
       function(value) {
-        return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(value);
+        return validator.isURL(value);
       },
       message: "Link inválido",
     },
