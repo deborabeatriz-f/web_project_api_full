@@ -1,6 +1,7 @@
 import ImagePopup from "../Popup/components/ImagePopup/ImagePopup";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CurrentUserContext } from "../../../../contexts/CurrentUserContext";
+import PopupConfirmation from "../Popup/components/PopupConfirmation/PopupConfirmation";
 
 export default function Card(props) {
   const { currentUser } = useContext(CurrentUserContext);
@@ -8,6 +9,16 @@ export default function Card(props) {
   const { name, link, likes } = props.card;
   const { handleOpenPopup, handleCardLike, handleCardDelete } = props;
   const isLiked = likes.some((like) => like === currentUser._id);
+
+  const [isPopupConfirmationOpen, setIsPopupConfirmationOpen] = useState(false);
+
+  const closePopup = () => {
+    setIsPopupConfirmationOpen(false);
+  };
+
+  const deleteCard = () => {
+    handleCardDelete(props.card);
+  };
 
   console.log(isLiked);
   const cardLikeButtonClassName = `grid__button-heart ${
@@ -20,7 +31,7 @@ export default function Card(props) {
     <div className="grid__card">
       <button
         className="grid__card-delete"
-        onClick={() => handleCardDelete(props.card)}
+        onClick={() => setIsPopupConfirmationOpen(true)}
       ></button>
       <img
         src={link}
@@ -35,6 +46,12 @@ export default function Card(props) {
           onClick={() => handleCardLike(props.card)}
         ></button>
       </div>
+      {isPopupConfirmationOpen && (
+        <PopupConfirmation
+          closePopup={closePopup}
+          handleCardDelete={deleteCard}
+        />
+      )}
     </div>
   );
 }
