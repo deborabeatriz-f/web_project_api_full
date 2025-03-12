@@ -3,7 +3,7 @@ const router = require("express").Router();
 const {
   createUser,
   findUsers,
-  findUserById,
+  // findUserById,
   updateUser,
   updateAvatar,
   login,
