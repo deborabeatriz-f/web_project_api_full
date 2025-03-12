@@ -1,9 +1,15 @@
 import ImagePopup from "../Popup/components/ImagePopup/ImagePopup";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../../../contexts/CurrentUserContext";
 
 export default function Card(props) {
-  const { name, link, isLiked = false } = props.card;
-  const { handleOpenPopup, handleCardLike, handleCardDelete } = props;
+  const { currentUser } = useContext(CurrentUserContext);
 
+  const { name, link, likes } = props.card;
+  const { handleOpenPopup, handleCardLike, handleCardDelete } = props;
+  const isLiked = likes.some((like) => like === currentUser._id);
+
+  console.log(isLiked);
   const cardLikeButtonClassName = `grid__button-heart ${
     isLiked ? "grid__button-heart-active" : ""
   }`;
