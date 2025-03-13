@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "https://tripleten-around-full.onrender.com";
 
 export const signin = (email, password) => {
   return fetch(`${BASE_URL}/users/me`, {
