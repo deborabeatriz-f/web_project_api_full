@@ -5,7 +5,7 @@ const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
 const { login, createUser } = require("./controllers/user");
 const cors = require("cors");
-import { requestLogger, errorLogger } from "./middlewares/logger";
+const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const mongoose = require("mongoose");
 const errorHandler = require("./middlewares/errorHandler");
