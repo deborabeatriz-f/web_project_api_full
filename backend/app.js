@@ -9,7 +9,15 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const mongoose = require("mongoose");
 const errorHandler = require("./middlewares/errorHandler");
-mongoose.connect("mongodb://localhost:27017/aroundb");
+mongoose.connect(
+  process.env.NODE_ENV === "production"
+    ? process.env.MONGO_URI
+    : "mongodb://localhost:27017/authdb",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 app.use(
   cors({
